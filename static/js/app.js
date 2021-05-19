@@ -8,15 +8,17 @@ function buildMetadata(sample) {
         var resultArray = metadata.filter(sampleObject => sampleObject.id == sample);
         var result = resultArray[0];
 // - update the metadata html elements
-        var PANEL = d3.select("sample-metadata");
+        var panel = d3.select("#sample-metadata");
+        // console.log(panel)
+
 // - clear any existing metadata in the metadata html elements
-        PANEL.html("");
+        panel.html("");
 // - append hew header tags for each key-value pair in the filtered metadata
         Object.entries(result).forEach(([key, value]) => {
-            PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
+            panel.append("h6").text(`${key.toUpperCase()}: ${value}`);
         });
 
-        // buildGauge(result.wfreq);
+        buildGauge(result.wfreq);
     });
 }
 
@@ -36,7 +38,7 @@ function buildCharts(sample) {
         var sample_values = result.sample_values;
 // - build a bubble chart and plot with Plotly.newPlot()
         var bubbleLayout = {
-            title: "Bacteria Cultures Per Sample",
+            title: "Bacteria Cultures Per Naval Sample",
             margin: {t:0},
             hovermode: "closest",
             xaxis: { title: "OTU ID"},
@@ -66,7 +68,7 @@ function buildCharts(sample) {
             {
                 y: yticks,
                 x: sample_values.slice(0, 10).reverse(),
-                text: otu_labels.slice(0, 10).reserse(),
+                text: otu_labels.slice(0, 10).reverse(),
                 type: "bar",
                 orientation: "h",
             }
